@@ -16,9 +16,11 @@ func _ready():
 	$RollbackSynchronizer.process_settings()
 
 func _rollback_tick(delta: float, _tick: int, _fresh: bool) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
+	## Add the gravity.
+	#print(is_on_floor())
+	#if not is_on_floor():
+		#
+		#velocity += get_gravity() * delta
 
 	# Handle jump.
 	if input.jump_init and is_on_floor():
@@ -26,11 +28,12 @@ func _rollback_tick(delta: float, _tick: int, _fresh: bool) -> void:
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := input.movement.x
+	var direction := input.movement
 	if direction:
-		velocity.x = direction * SPEED
+		velocity = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.y = move_toward(velocity.y, 0, SPEED)
 	
 	if death_flag:
 		global_position = respawn_point

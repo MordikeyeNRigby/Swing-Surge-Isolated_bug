@@ -1,13 +1,12 @@
 [gd_scene load_steps=5 format=3 uid="uid://c3pr4g56p1isn"]
 
-[ext_resource type="Script" uid="uid://bcc28dvk0pufe" path="res://addons/netfox.extras/physics/rapier_driver_2d.gd" id="1_8670m"]
+[ext_resource type="Script" uid="uid://c8p8gymii2y5v" path="res://addons/netfox.extras/physics/godot_driver_2d.gd" id="1_ehalg"]
 [ext_resource type="PackedScene" uid="uid://bqgusp0nwj3xn" path="res://multiplayer/multiplayer_ui.tscn" id="2_bjibq"]
 [ext_resource type="Script" uid="uid://bggfm884ukug0" path="res://multiplayer/networker.gd" id="3_4hroj"]
 [ext_resource type="PackedScene" uid="uid://i3kj3h33nbdw" path="res://testing_world/testing_world.tscn" id="4_8670m"]
 
 [node name="Main" type="Node"]
-script = ExtResource("1_8670m")
-physics_factor = 1
+script = ExtResource("1_ehalg")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

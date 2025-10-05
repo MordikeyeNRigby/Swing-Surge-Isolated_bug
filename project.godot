@@ -77,7 +77,3 @@ time/sync_to_physics=true
 rollback/input_redundancy=8
 rollback/display_offset=2
 rollback/input_delay=4
-
-[physics]
-
-2d/physics_engine="Rapier2D"
