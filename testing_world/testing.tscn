@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3pr4g56p1isn"]
+
+[ext_resource type="Script" uid="uid://bcc28dvk0pufe" path="res://addons/netfox.extras/physics/rapier_driver_2d.gd" id="1_8670m"]
+[ext_resource type="PackedScene" uid="uid://bqgusp0nwj3xn" path="res://multiplayer/multiplayer_ui.tscn" id="2_bjibq"]
+[ext_resource type="Script" uid="uid://bggfm884ukug0" path="res://multiplayer/networker.gd" id="3_4hroj"]
+[ext_resource type="PackedScene" uid="uid://i3kj3h33nbdw" path="res://testing_world/testing_world.tscn" id="4_8670m"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_8670m")
+physics_factor = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Multiplayer_Test_UI" parent="CanvasLayer" instance=ExtResource("2_bjibq")]
+
+[node name="Networker" type="Node" parent="."]
+script = ExtResource("3_4hroj")
+metadata/_custom_type_script = "uid://bggfm884ukug0"
+
+[node name="World" parent="." instance=ExtResource("4_8670m")]
+
+[connection signal="host" from="CanvasLayer/Multiplayer_Test_UI" to="Networker" method="on_create_server"]
+[connection signal="join" from="CanvasLayer/Multiplayer_Test_UI" to="Networker" method="on_join_server"]
+[connection signal="leave" from="CanvasLayer/Multiplayer_Test_UI" to="Networker" method="_on_multiplayer_test_ui_leave"]
+[connection signal="new_peer" from="Networker" to="World" method="_on_networker_new_peer"]
+[connection signal="session_disconnect" from="Networker" to="CanvasLayer/Multiplayer_Test_UI" method="_on_networker_session_disconnect"]
+[connection signal="session_disconnect" from="Networker" to="World" method="_on_networker_session_disconnect"]
+[connection signal="session_start" from="Networker" to="CanvasLayer/Multiplayer_Test_UI" method="_on_networker_session_start"]

@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://dpvuo0tyhjwp2"]
+
+[ext_resource type="Script" uid="uid://ik3nst84887v" path="res://testing_world/testing_character.gd" id="1_3dkcs"]
+[ext_resource type="Script" uid="uid://dokjtix7ooymq" path="res://testing_world/player_input.gd" id="2_alfhm"]
+[ext_resource type="Script" uid="uid://d350u8evihs1u" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="3_btlhl"]
+[ext_resource type="Script" uid="uid://dour8fehaaugp" path="res://addons/netfox/tick-interpolator.gd" id="4_btlhl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uoy73"]
+
+[node name="TestingCharacter" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_3dkcs")
+metadata/_custom_type_script = "uid://ik3nst84887v"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_uoy73")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+
+[node name="PlayerInput" type="Node" parent="."]
+script = ExtResource("2_alfhm")
+
+[node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("3_btlhl")
+root = NodePath("..")
+state_properties = Array[String]([":global_position", ":velocity"])
+input_properties = Array[String](["PlayerInput:mouse_pos", "PlayerInput:movement", "PlayerInput:lclick_init", "PlayerInput:lclick_release", "PlayerInput:rclick_init", "PlayerInput:rclick_release", "PlayerInput:jump_init", "PlayerInput:jump_release"])
+metadata/_custom_type_script = "uid://d350u8evihs1u"
+
+[node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("4_btlhl")
+root = NodePath("..")
+properties = Array[String]([":global_position", ":velocity"])
+metadata/_custom_type_script = "uid://dour8fehaaugp"

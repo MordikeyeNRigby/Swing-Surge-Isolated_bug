@@ -1,0 +1,138 @@
+[gd_scene load_steps=13 format=3 uid="uid://i3kj3h33nbdw"]
+
+[ext_resource type="Script" uid="uid://dos37wtjf8wdt" path="res://testing_world/world.gd" id="1_4ldl6"]
+[ext_resource type="Script" uid="uid://b08jm476s8vpe" path="res://testing_world/rando_spawn.gd" id="2_1yhgf"]
+[ext_resource type="Script" uid="uid://c6y7xgw31iu3a" path="res://testing_world/testing_spawner.gd" id="3_1vnay"]
+[ext_resource type="PackedScene" uid="uid://dpvuo0tyhjwp2" path="res://testing_world/testing_character.tscn" id="4_1vnay"]
+[ext_resource type="Script" uid="uid://b0bxunhyck2xn" path="res://testing_world/death_zone.gd" id="5_ssium"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_auveq"]
+size = Vector2(1152, 46)
+
+[sub_resource type="Gradient" id="Gradient_auveq"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8lvd8"]
+gradient = SubResource("Gradient_auveq")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8lvd8"]
+size = Vector2(1152, 46)
+
+[sub_resource type="Gradient" id="Gradient_8lvd8"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_f1rhj"]
+gradient = SubResource("Gradient_8lvd8")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f1rhj"]
+size = Vector2(2304, 258)
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_4ldl6")
+
+[node name="SpawnsRoot" type="Node2D" parent="."]
+position = Vector2(75, 376)
+script = ExtResource("2_1yhgf")
+
+[node name="Node2D" type="Node2D" parent="SpawnsRoot"]
+
+[node name="Node2D2" type="Node2D" parent="SpawnsRoot"]
+position = Vector2(-168, 0)
+
+[node name="Node2D3" type="Node2D" parent="SpawnsRoot"]
+position = Vector2(168, 0)
+
+[node name="Node2D4" type="Node2D" parent="SpawnsRoot"]
+position = Vector2(-327, 0)
+
+[node name="Node2D5" type="Node2D" parent="SpawnsRoot"]
+position = Vector2(327, 0)
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("camera", "random_position")]
+spawn_path = NodePath(".")
+spawn_limit = 4
+script = ExtResource("3_1vnay")
+player_scene = ExtResource("4_1vnay")
+camera = NodePath("../Camera2D")
+random_position = NodePath("../SpawnsRoot")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 324)
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(321, 1058)
+rotation = -1.5707941
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+shape = SubResource("RectangleShape2D_auveq")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D3"]
+scale = Vector2(4.5, 46.5)
+texture = SubResource("GradientTexture1D_8lvd8")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(781.0001, 1051)
+rotation = 1.570803
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+shape = SubResource("RectangleShape2D_auveq")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2"]
+scale = Vector2(4.5, 46.5)
+texture = SubResource("GradientTexture1D_8lvd8")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(-19, 445)
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_auveq")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+scale = Vector2(4.5, 46.5)
+texture = SubResource("GradientTexture1D_8lvd8")
+
+[node name="GrapplingSurface2" type="StaticBody2D" parent="."]
+position = Vector2(1725, 126)
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrapplingSurface2"]
+shape = SubResource("RectangleShape2D_8lvd8")
+
+[node name="Sprite2D" type="Sprite2D" parent="GrapplingSurface2"]
+position = Vector2(0, 0.25)
+scale = Vector2(4.5, 46.5)
+texture = SubResource("GradientTexture1D_f1rhj")
+
+[node name="GrapplingSurface" type="StaticBody2D" parent="."]
+position = Vector2(576, 126)
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrapplingSurface"]
+shape = SubResource("RectangleShape2D_8lvd8")
+
+[node name="Sprite2D" type="Sprite2D" parent="GrapplingSurface"]
+position = Vector2(0, 0.25)
+scale = Vector2(4.5, 46.5)
+texture = SubResource("GradientTexture1D_f1rhj")
+
+[node name="DeathZone" type="Area2D" parent="." node_paths=PackedStringArray("respawn_point")]
+position = Vector2(563, 622)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("5_ssium")
+respawn_point = NodePath("../Respawns/Node2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
+shape = SubResource("RectangleShape2D_f1rhj")
+
+[node name="Respawns" type="Node2D" parent="."]
+
+[node name="Node2D" type="Node2D" parent="Respawns"]
+position = Vector2(43, 219)
