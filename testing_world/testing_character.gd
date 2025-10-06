@@ -6,6 +6,7 @@ const JUMP_VELOCITY = -400.0
 @onready var input: PlayerInput = $PlayerInput
 var peer_id: int
 @onready var synchronizer: RollbackSynchronizer = $RollbackSynchronizer
+@onready var area_shape_cast: ShapeCast2D = $ShapeCast2D
 var death_flag: bool = false
 var respawn_point: Vector2
 func not_dead():
@@ -34,12 +35,11 @@ func _rollback_tick(delta: float, _tick: int, _fresh: bool) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.y = move_toward(velocity.y, 0, SPEED)
-	
-	if death_flag:
-		global_position = respawn_point
-		death_flag = false
-		print("death")
-		
+	area_shape_cast.force_shapecast_update()
+	for i: int in area_shape_cast.get_collision_count():
+		var area: Area2D = area_shape_cast.get_collider(i)
+		if area.has_method(&"_modify"):
+			area._modify(self)
 	velocity *= NetworkTime.physics_factor
 	move_and_slide()
 	velocity /= NetworkTime.physics_factor

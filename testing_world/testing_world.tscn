@@ -124,8 +124,8 @@ texture = SubResource("GradientTexture1D_f1rhj")
 
 [node name="DeathZone" type="Area2D" parent="." node_paths=PackedStringArray("respawn_point")]
 position = Vector2(563, 622)
-collision_layer = 0
-collision_mask = 2
+collision_layer = 8
+collision_mask = 0
 script = ExtResource("5_ssium")
 respawn_point = NodePath("../Respawns/Node2D")
 
